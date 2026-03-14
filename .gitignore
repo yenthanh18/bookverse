@@ -38,7 +38,7 @@ ehthumbs.db
 Thumbs.db
 
 # Machine Learning & large files
-*.pkl
+# *.pkl (Excluded because they are required for local setup and fit under 100MB)
 *.h5
 *.model
 models/saved/
