@@ -1,0 +1,67 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Manage Books{% endblock %}
+{% block header_title %}Manage Books{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="px-6 py-5 border-b border-slate-100 flex flex-col md:flex-row md:justify-between md:items-center gap-4 bg-slate-50">
+        <div>
+            <h3 class="text-lg font-bold text-slate-900">Inventory Tracker</h3>
+            <p class="text-sm text-slate-500">Monitor your book catalog and stock levels.</p>
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm text-slate-600">
+            <thead class="text-xs uppercase bg-slate-50 text-slate-500">
+                <tr>
+                    <th scope="col" class="px-6 py-4 font-bold tracking-wider">Book Name</th>
+                    <th scope="col" class="px-6 py-4 font-bold tracking-wider">Price/Discount</th>
+                    <th scope="col" class="px-6 py-4 font-bold tracking-wider">ISBN</th>
+                    <th scope="col" class="px-6 py-4 font-bold tracking-wider">Stock</th>
+                    <th scope="col" class="px-6 py-4 font-bold tracking-wider">Status</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                {% for book in books %}
+                <tr class="hover:bg-slate-50/80 transition-colors {% if book.stock_quantity < 5 %}bg-red-50/30{% endif %}">
+                    <td class="px-6 py-4">
+                        <div class="flex items-center gap-4">
+                            <img src="{{ book.image_url }}" alt="{{ book.title }}" class="w-10 h-14 object-cover rounded shadow-sm border border-slate-100 bg-white">
+                            <div>
+                                <h4 class="font-bold text-slate-900 line-clamp-2 max-w-xs">{{ book.title }}</h4>
+                                <p class="text-xs text-slate-500 truncate max-w-xs">{{ book.authors | map(attribute='name') | join(', ') }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 font-bold text-slate-900 whitespace-nowrap">
+                        {% if book.discount_price and book.discount_price > 0 %}
+                            <span class="text-brand-orangeAccent">${{ '%.2f' | format(book.discount_price) }}</span>
+                            <span class="text-slate-400 text-xs line-through ml-1">${{ '%.2f' | format(book.price) }}</span>
+                        {% else %}
+                            ${{ '%.2f' | format(book.price) }}
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 text-xs font-mono text-slate-500">{{ book.isbn or 'N/A' }}</td>
+                    <td class="px-6 py-4">
+                        {% if book.stock_quantity < 5 %}
+                            <div class="flex items-center gap-2 text-red-600 font-bold">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                {{ book.stock_quantity }}
+                            </div>
+                        {% else %}
+                            <div class="font-bold text-slate-900">{{ book.stock_quantity }}</div>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold {{ 'bg-emerald-100 text-emerald-800' if book.is_active else 'bg-slate-100 text-slate-800' }}">
+                            {{ 'Active' if book.is_active else 'Archived' }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

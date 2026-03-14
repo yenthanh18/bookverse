@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed - BookVerse{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+    <!-- Success Icon -->
+    <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 text-green-500 shadow-sm border border-green-200">
+        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+        </svg>
+    </div>
+    
+    <h1 class="text-4xl md:text-5xl font-black text-slate-900 mb-4">Order Confirmed!</h1>
+    <p class="text-lg text-slate-600 mb-2">Thank you for your purchase. We've received your order.</p>
+    
+    <div class="inline-block bg-slate-50 border border-slate-200 rounded-xl px-6 py-3 mb-8">
+        <p class="text-sm font-semibold text-slate-500">Order Reference number:</p>
+        <p class="text-xl font-bold text-brand-deepBlue uppercase tracking-wider">#BV-{{ "%06d" | format(order.id) }}</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 text-left p-6 md:p-8 mb-10 mx-auto max-w-2xl">
+        <h3 class="text-xl font-bold text-slate-900 mb-6 border-b border-slate-100 pb-4">Order Details</h3>
+        
+        <div class="space-y-4 mb-6">
+            {% for item in order.items %}
+            <div class="flex items-center gap-4">
+                <img src="{{ item.book.image_url }}" alt="{{ item.book.title }}" class="w-12 h-16 object-cover rounded shadow-sm border border-slate-100">
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-slate-800 truncate text-sm">{{ item.book.title }}</p>
+                    <p class="text-xs text-slate-500">Quantity: {{ item.quantity }}</p>
+                </div>
+                <div class="font-bold text-slate-900 text-sm">
+                    ${{ '%.2f' | format(item.price_at_purchase * item.quantity) }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="space-y-2 text-sm font-medium border-t border-slate-100 pt-4 mb-4">
+            <div class="flex justify-between text-slate-600">
+                <span>Subtotal</span>
+                <span>${{ '%.2f' | format(order.subtotal_amount) }}</span>
+            </div>
+            <div class="flex justify-between text-slate-600">
+                <span>Shipping</span>
+                <span>${{ '%.2f' | format(order.shipping_fee) }}</span>
+            </div>
+            {% if order.discount_amount > 0 %}
+            <div class="flex justify-between text-emerald-600">
+                <span>Discount</span>
+                <span>-${{ '%.2f' | format(order.discount_amount) }}</span>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="flex justify-between items-center border-t border-slate-200 pt-4 mb-6">
+            <span class="text-lg font-bold text-slate-900">Total Paid</span>
+            <span class="text-2xl font-black text-brand-orangeAccent">${{ '%.2f' | format(order.total_amount) }}</span>
+        </div>
+
+        <div class="bg-orange-50 rounded-xl p-4 border border-brand-orangeAccent text-sm text-slate-700">
+            <strong class="text-brand-orangeAccent">Payment Method:</strong> Cash on Delivery (COD). Please have the exact amount ready when your package arrives at:
+            <br/><br/>
+            <span class="font-semibold text-slate-900">{{ order.shipping_address }}</span>
+        </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{{ url_for('public_bp.catalog') }}" class="bg-brand-deepBlue hover:bg-blue-800 text-white font-bold py-3 px-8 rounded-xl transition-colors">
+            Continue Shopping
+        </a>
+        <a href="{{ url_for('public_bp.index') }}" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-8 rounded-xl transition-colors">
+            Return to Homepage
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    gtag('event', 'purchase', {
+        transaction_id: "BV-{{ order.id }}",
+        value: {{ order.total_amount }},
+        currency: "USD",
+        tax: 0,
+        shipping: {{ order.shipping_fee }},
+        items: [
+            {% for item in order.items %}
+            {
+                item_id: "{{ item.book.id }}",
+                item_name: {{ item.book.title|tojson|safe }},
+                price: {{ item.price_at_purchase }},
+                quantity: {{ item.quantity }}
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ]
+    });
+</script>
+{% endblock %}

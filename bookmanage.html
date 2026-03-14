@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BookVerse Admin - Books Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav {
+            background-color: rgba(236, 91, 19, 0.1);
+            color: #ec5b13;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<div class="flex min-h-screen">
+<!-- Side Navigation -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<div>
+<h1 class="text-xl font-bold tracking-tight">BookVerse</h1>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Admin Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl active-nav" href="#">
+<span class="material-symbols-outlined text-primary">book</span>
+<span class="font-semibold text-primary">Books</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person_book</span>
+<span class="font-medium">Authors</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-medium">Orders</span>
+</a>
+<div class="pt-4 pb-2 px-4 text-xs font-bold text-slate-400 uppercase tracking-widest">System</div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-medium">Logout</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+<div class="size-10 rounded-full bg-slate-300 overflow-hidden" data-alt="Admin user profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDG6YUFQER3pSYmuSwXYrlkxb0YC6qp8Vyfv_y-CyFMwcsTPpI6Hq-pQvER5VSJYFS4ehhVdOT1ANi-F1ZFDhtAcYwrY2EqxH488NId1JZf4kdF4VvdZ_zmLTqWbspi1tEgsRTkHII8PEY91ADokKXYZOFPi_Q0WGWt-R7h7La2hCspHhU5DR02IlKE9LymydThnwRfo4E8OLr4suaKcPb8S7kfZomPgsaROkNPYnRn0CSH5NN33lx3gnYDECcE3_LqOZhfvDzZlwG7'); background-size: cover;"></div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">Alex Morgan</p>
+<p class="text-xs text-slate-500 truncate">System Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- Top Bar -->
+<header class="h-16 flex items-center justify-between px-8 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold">Books Management</h2>
+<div class="h-4 w-px bg-slate-200 dark:bg-slate-800"></div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg group-focus-within:text-primary transition-colors">search</span>
+<input class="pl-10 pr-4 py-1.5 w-64 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-slate-400" placeholder="Quick search books..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full ring-2 ring-white dark:ring-slate-900"></span>
+</button>
+<button class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-800 mx-1"></div>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+<span>Oct 12, 2023</span>
+</button>
+</div>
+</header>
+<!-- Main Workspace -->
+<div class="p-8 flex flex-col gap-6">
+<!-- Table Header Actions -->
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-2xl font-bold tracking-tight">Books Inventory</h3>
+<p class="text-sm text-slate-500">Manage your library collection, prices, and stock levels.</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-primary/25 transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                    Add New Book
+                </button>
+</div>
+<!-- Stats Overview -->
+<div class="grid grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Books</p>
+<div class="flex items-end justify-between">
+<span class="text-2xl font-bold">1,482</span>
+<span class="text-green-500 text-xs font-bold flex items-center bg-green-500/10 px-1.5 py-0.5 rounded">+2.4%</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Low Stock</p>
+<div class="flex items-end justify-between">
+<span class="text-2xl font-bold">18</span>
+<span class="text-amber-500 text-xs font-bold flex items-center bg-amber-500/10 px-1.5 py-0.5 rounded">Action required</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Value</p>
+<div class="flex items-end justify-between">
+<span class="text-2xl font-bold">$42,910</span>
+<span class="text-slate-400 text-xs font-normal">Est. Revenue</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
+<p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Avg Price</p>
+<div class="flex items-end justify-between">
+<span class="text-2xl font-bold">$18.45</span>
+<span class="text-primary text-xs font-normal">Market competitive</span>
+</div>
+</div>
+</div>
+<!-- Content Table Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-medium">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                            Filter
+                        </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">sort</span>
+                            Sort
+                        </button>
+</div>
+<div class="text-sm text-slate-500">
+                        Showing <span class="font-bold text-slate-900 dark:text-slate-100">1-10</span> of 1,482 books
+                    </div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50">
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">Book ID</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">Title</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">Price</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 text-center">Stock Quantity</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">Status</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-mono text-slate-500">#BK-001</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-md bg-slate-200 flex-shrink-0 bg-cover bg-center" data-alt="Cover of The Great Gatsby" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTyXbPDwqXxjLB5sdDHeTheVs7gJ5jEUYdwuXeXWHmlelTG-blokn-nzP33uv4vaCytYPOofzgbF4bCGw7SWSw53baZkMidmdc2TUj8_A-X-VkN4aNwlOU2Rd_ddVjEncz9Nn6uflLUpaLxEDYuPAJxqTUpkpY-L-DBJayhXqto-30l03fouk5xXoUDsRQAMyp1pkOMXnOWLo7E5Wpf22XX76AgFdNwKyX7Dbvf0mX_Qy_JmaJwErkM3reNofOVyC5RHnFOWdDjTKV');"></div>
+<div>
+<p class="text-sm font-bold">The Great Gatsby</p>
+<p class="text-xs text-slate-500">F. Scott Fitzgerald</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold">$15.99</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-sm font-medium">120</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-mono text-slate-500">#BK-002</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-md bg-slate-200 flex-shrink-0 bg-cover bg-center" data-alt="Cover of 1984" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDpIQIsF5MvHequrC0W2vyhaZGdUkJAmCo1zdsO0wj263qos7umu7fKrNUrJEYWIfcNjwmxP1kM9tfAZDC4DOcU0skjLVbdqSnFnXsjfd7xXOmR003Q76zEmZQjultS3CkKtQkhyXUocEOjiytr6TIq4vXS6Uq8ZQEKLC4v6EYEQhY2YcCysdWPpnAI6Ukjgu0Ah-ra2_uCkYssn3Td_piJuK1qjbbomqWLS2_KVdHrVeNEUxRwuEwVwI5hVgaBl6vzrgREMNpyETxI');"></div>
+<div>
+<p class="text-sm font-bold">1984</p>
+<p class="text-xs text-slate-500">George Orwell</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold">$12.50</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-sm font-medium">85</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-mono text-slate-500">#BK-003</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-md bg-slate-200 flex-shrink-0 bg-cover bg-center" data-alt="Cover of Brave New World" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB0k9bNmqA5b_SAdSRWROeQ7rKRtefbUEm3Mz5KH6ajY4EoIErYG1oi-P4hDGvChFzD-BU27__0qdkrcidHq9ZEeCHxPXsbg5TksfjT2-FdZ6j_MldoXg_lMAHnqe2xExCJsYkagdEVD5HLN8ce4G3bwmxJ30U8AH-UadsAXB8gNimFdpOrlRyET0Fs4E3RxEIlXsTpUQYaIGor48-ApV22PAWoZP0UbYFauTH6MdAvlNguTUz62MWx66Me-a4Ytnfe47HMbNBx6Tx0');"></div>
+<div>
+<p class="text-sm font-bold">Brave New World</p>
+<p class="text-xs text-slate-500">Aldous Huxley</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold">$14.00</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2.5 py-1 rounded-full bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-sm font-bold">Out of Stock</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 text-xs font-bold">
+<span class="size-1.5 rounded-full bg-slate-400"></span>
+                                        Inactive
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-mono text-slate-500">#BK-004</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-md bg-slate-200 flex-shrink-0 bg-cover bg-center" data-alt="Cover of The Catcher in the Rye" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDU6QBBXbt-yrb1jwR7zJVhjCiPaW0tc_Tq2i8BdFVrFG8tXaVSzdvUe3T_xHFRXRZiRINO2Z5jhXRJKwTI06y91GArNsnBBAGRpQ7t_HlgcXIQl41scRzYEJi6pxjowmxVrw_ydqy6eMRr1eKXV7Lw3p1esg7In1ohTa4dDau85IPMEia-cLggoxAd1J9itRYJwdwvgAqWam-POD69dx1ZpPmpP8J-3FZYAJv-nYKCuswmfiWPu7uTCIJYt3ozxkbr4C15FWlA3gCJ');"></div>
+<div>
+<p class="text-sm font-bold">The Catcher in the Rye</p>
+<p class="text-xs text-slate-500">J.D. Salinger</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold">$10.99</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-sm font-medium">45</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-mono text-slate-500">#BK-005</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-md bg-slate-200 flex-shrink-0 bg-cover bg-center" data-alt="Cover of To Kill a Mockingbird" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAxd3m2PgLJhWVrGWU_K9_jYJGsGNIOUsDUm3eVQpi_M_NDnDmYBxW9xYfIy3pgJxioCK0O-74M3LwC6qxU6xo01F0R2xYilWXdDHhvb8RCg1K_0nYU3yyJW9SRUptSdK1Tm-Y3-drocuursCiF3tdJz-x0tu-CrNvLfj0--OmRQWyV0qkfCWAFmA7PfqqOAiPIzJR3yMzOVRar-nwVDj2_EA5L24cnbnNH9WV-vHfClVi_DUfEtpThBxm4lK6l_WVUrbzrnSvx-PyR');"></div>
+<div>
+<p class="text-sm font-bold">To Kill a Mockingbird</p>
+<p class="text-xs text-slate-500">Harper Lee</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-bold">$18.25</td>
+<td class="px-6 py-4 text-center">
+<span class="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 text-sm font-bold">Low: 12</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors" title="Edit">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/30 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+                        Previous
+                    </button>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold bg-primary text-white">1</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700">2</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700">3</button>
+<span class="w-8 h-8 flex items-center justify-center text-slate-400">...</span>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700">148</button>
+</div>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm font-bold text-slate-900 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        Next
+                        <span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

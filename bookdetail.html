@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Great Adventure - BookVerse</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-20 gap-8">
+<!-- Logo -->
+<div class="flex items-center gap-2 flex-shrink-0">
+<div class="bg-primary p-1.5 rounded-lg text-white">
+<span class="material-symbols-outlined text-2xl leading-none">auto_stories</span>
+</div>
+<h1 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">BookVerse</h1>
+</div>
+<!-- Search Bar -->
+<div class="hidden md:flex flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl py-2.5 pl-10 pr-4 focus:ring-2 focus:ring-primary/50 text-sm" placeholder="Search for books, authors, or ISBN..." type="text"/>
+</div>
+</div>
+<!-- Nav Links -->
+<nav class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-600 dark:text-slate-300">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<a class="hover:text-primary transition-colors" href="#">Categories</a>
+<a class="hover:text-primary transition-colors" href="#">Best Sellers</a>
+<a class="hover:text-primary transition-colors" href="#">Promotions</a>
+<a class="hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="relative p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full ring-2 ring-white dark:ring-background-dark">3</span>
+</button>
+<div class="ml-2 w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img alt="User Profile" data-alt="Portrait of a smiling male user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkIzpwiQdfNGXCr0YTFSVedjHD1KDM7vzBKN63UtiDLb_aGGcZ79wjqPgLnkBDOil69MooxK2z5NfkxMYidVzEUfUUDpEcTQPFp7gA6K1TOOv8xRe34YVEikMibrYmgx9RPYErQDN3Y_KDRsQQcFdafL66MEgeUf7cxv36cDU5AZqtieUwj2IMlourWk-fCmODWsf4ehvDXjIa1LYgLVpOCSEmu8sepHwDX15eMqKckLkiKyJxBv0sXWygJsbz79X64IaLyJbG3o3y"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-8">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary" href="#">Fiction</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100 font-medium">The Great Adventure</span>
+</nav>
+<!-- Product Hero Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+<!-- Left: Images -->
+<div class="lg:col-span-5 space-y-4">
+<div class="aspect-[3/4] rounded-2xl overflow-hidden bg-slate-200 dark:bg-slate-800 shadow-xl border border-slate-200 dark:border-slate-800">
+<img class="w-full h-full object-cover" data-alt="Hardcover book titled The Great Adventure on a desk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDreT3p-9saKQlwqKfkAe71t5jq4SjvuA3Zsxvp5C0VjGV-cLZUACaDyP7lBdMmj4JXme2VQstAWp6STPp9HpdoXj-rk5J1Bj10UBWepucX10Cz3ECHnEqIr_uRPuOJfDwE0EF2GYWmN7JJ-NX316OZCMCH5WvYg983IzO3FqFCzZZ5fcw4pQgDpQQ_j-xWsN5lKmhXN6yRNpuAgrbuqrbBolTFdhoixgtBSLRxKlwiZjUWqcst11mCRWcTGNYT_L1lXcCJeATJkeZV"/>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-square rounded-xl overflow-hidden border-2 border-primary cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Main cover view of the book" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOLuZFL3KBD6mUnof7_TINiOjF7DCxa6DWEKE9p5lwU5D2FsWz5NXWJim20PhoGhv2Nb8xRYSXvKuHot-DZsAaYCPGfEIg5G3Srh3Qq5-ZgAuc9dW5-H1DqdD5fYcVezCbpzSZeWWT9rloKavzEEwiOx5Vio1-720TkjU-4gThDTi4RDOVFCBLfYh68lMgk_5Va7aL-8jZSJYHdfMCV_D_zCkrkIStlyl3SGujF8N2zzLxFLXwg4Rtp9p8zfTEOeEBlHvzuAdAzOKV"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden border-2 border-transparent hover:border-primary/50 cursor-pointer bg-slate-100 dark:bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Side profile view of book thickness" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9GNXJSXhHp1fHnpTMUQz5_LIukLF4V006U1tnIXAvdfCNEHFStlEqBYdtMC2R1buF4DvJi5n8JSGXMdGt0nXzS9p7ysyBs8VsTBfQkEDh2w8x7Hh_ZvzcGoDmOBQQwiYzelZwYzC_OEOHK3NzUzWqNlCkQOPHgeM8b2kpYWdt0Mh0josLYmlChnidBzmKO9EXozlbskMpRdmG54MAmZ4tH0101LbgPrPfM1t8oHyl4Bk_VPQPVYGa0uzeYcvzarfk6XO0tAFfbe6C"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden border-2 border-transparent hover:border-primary/50 cursor-pointer bg-slate-100 dark:bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Open book pages detail view" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB-z4zuxH-2Z0lTnOuECGdRz4fHrBld6kfJEpluUc-WHk-2hTPiqVoIr-hPExm56jCCUELe061NK1OCLlZOtIcraprKpyl1hXLDik_3omvyPDif4lJP0s0a3b_PmpuoDBwBDR0GKK-CFTumFzjc_hBzRS9nIePqd-r9dqg5tWBTeCHkFQEr1EZiSq77U4BvacVObou5LhqBEYJzz3YIMzoF7i2-Zv8U8q1YM7MV0f2e-S0XO3pA_OoIzcdUPyWKpHX80jIMswOqwUt"/>
+</div>
+<div class="aspect-square rounded-xl overflow-hidden border-2 border-transparent hover:border-primary/50 cursor-pointer bg-slate-100 dark:bg-slate-800">
+<img class="w-full h-full object-cover" data-alt="Back cover of the book" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4cvFn6Nn0khvo-ZJ8MjzdHghj3oxFaVb4m2s-2AyG6qXHnYSXWuiBr_GbsNypwHM6Nx0Ae7mM3Ut_ETNAFGNTIm4ut4uk1lnevmhmRTDxtxWjV8kbADLZpePZI6URLODHVLFf_CPMh-2A7BXrsJgeGfOCFj1YwvbHLaaQ6etqhGcK7W8yHUuNZrBDIsQXj5ZWwiW-h50UoQll8n36f_BiTIbZYuANqzVqOHvwVFwnnqnzG3H64a57fhXlXpjH_VA4ptNyuujt_1YY"/>
+</div>
+</div>
+</div>
+<!-- Right: Content -->
+<div class="lg:col-span-7 flex flex-col">
+<div class="mb-6">
+<h2 class="text-4xl font-black text-slate-900 dark:text-white mb-2 leading-tight">The Great Adventure</h2>
+<p class="text-xl text-slate-600 dark:text-slate-400">by <a class="text-primary hover:underline font-semibold" href="#">Elena Gilbert</a></p>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="flex items-center text-amber-400">
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined fill-1">star</span>
+<span class="material-symbols-outlined">star_half</span>
+<span class="ml-2 text-slate-900 dark:text-slate-100 font-bold">4.5</span>
+</div>
+<span class="text-slate-400">|</span>
+<a class="text-slate-500 hover:text-primary text-sm underline underline-offset-4" href="#">124 Reviews</a>
+</div>
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-2">
+<span class="text-3xl font-black text-slate-900 dark:text-white">$14.99</span>
+<span class="text-lg text-slate-400 line-through">$19.99</span>
+<span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-lg">-25% OFF</span>
+</div>
+<div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                        In Stock &amp; Ready to Ship
+                    </div>
+</div>
+<div class="mb-8">
+<p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+                        An epic journey through uncharted lands and the human heart. Elena Gilbert weaves a masterful tale of resilience and discovery that will stay with you long after the final page is turned. Follow Marcus as he ventures beyond the edge of the map to save what remains of his broken world.
+                    </p>
+</div>
+<div class="mt-auto space-y-6">
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2 py-1 border border-slate-200 dark:border-slate-700">
+<button class="w-10 h-10 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="w-12 text-center font-bold">1</span>
+<button class="w-10 h-10 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="flex-1 min-w-[200px] h-14 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">shopping_basket</span>
+                            Add to Cart
+                        </button>
+<button class="flex-1 min-w-[200px] h-14 bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-bold rounded-xl hover:opacity-90 transition-all flex items-center justify-center">
+                            Buy Now
+                        </button>
+</div>
+<!-- Trust Badges -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<span>Free Shipping</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">history</span>
+</div>
+<span>30-Day Returns</span>
+</div>
+<div class="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<span>Secure Checkout</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Tabs -->
+<div class="mb-20">
+<div class="flex border-b border-slate-200 dark:border-slate-800 mb-8">
+<button class="px-8 py-4 text-sm font-bold border-b-2 border-primary text-primary">Description</button>
+<button class="px-8 py-4 text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors">Specifications</button>
+<button class="px-8 py-4 text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors">Reviews (124)</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<div class="lg:col-span-2">
+<h3 class="text-xl font-bold mb-4">About the Book</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                        "The Great Adventure" is more than just a story; it's an exploration of human spirit. Elena Gilbert takes readers on a vivid journey across the Whispering Plains to the Peak of Silence. This hardcover edition features exclusive illustrations and a map of the world of Eldoria.
+                    </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex justify-between">
+<span class="text-slate-500">Publisher</span>
+<span class="font-semibold">Penguin</span>
+</div>
+<div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex justify-between">
+<span class="text-slate-500">Year</span>
+<span class="font-semibold">2023</span>
+</div>
+<div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex justify-between">
+<span class="text-slate-500">Format</span>
+<span class="font-semibold">Hardcover</span>
+</div>
+<div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex justify-between">
+<span class="text-slate-500">Language</span>
+<span class="font-semibold">English</span>
+</div>
+<div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 sm:col-span-2 flex justify-between">
+<span class="text-slate-500">ISBN</span>
+<span class="font-semibold">978-3-16-148410-0</span>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 rounded-2xl p-6 h-fit border border-primary/10">
+<h3 class="text-lg font-bold mb-4">Reader Feedback</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-4xl font-black">4.5</span>
+<div class="flex flex-col">
+<div class="flex text-amber-400 text-xs">
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="material-symbols-outlined text-xs">star_half</span>
+</div>
+<span class="text-[10px] text-slate-500">Out of 5 stars</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="text-xs w-4">5</span>
+<div class="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[75%]"></div>
+</div>
+<span class="text-xs text-slate-400">75%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs w-4">4</span>
+<div class="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[15%]"></div>
+</div>
+<span class="text-xs text-slate-400">15%</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs w-4">3</span>
+<div class="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[5%]"></div>
+</div>
+<span class="text-xs text-slate-400">5%</span>
+</div>
+</div>
+<button class="w-full py-3 mt-4 text-sm font-bold text-primary bg-white dark:bg-slate-800 rounded-xl border border-primary/20 hover:bg-primary/5 transition-colors">
+                            Write a Review
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Similar Books Carousel -->
+<section class="mb-16">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-black">Similar Books</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded-full border border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="p-2 rounded-full border border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="flex gap-6 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4">
+<!-- Book Card -->
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cover of a fantasy novel with blue hues" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7PBZfHOHsmEaK3K3tqt5xKtJdQA8ce_9foXBhDqN9Rlv8Z9Dzif5LZBrDf8A_-U2g82bbnaaqMtEp4cat-uqyftQq7aisUWIEmgHqL9Bhtqv1FraZb7OSSp72VjaMne1icHMXkjoGN8zZNTurfmsDiKyq3FwZAe4EmNJLii8UH5O-2KoAR7vAh1sZQIKEwPG1_VPKvdps3O7hb0_AiSprwuTNTderWl7E7TsXZZcOC-fSUgFuDzCG2umBjgMnY0XEPt51iVVV9aI-"/>
+<button class="absolute top-2 right-2 p-2 bg-white/90 dark:bg-background-dark/90 rounded-full text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h4 class="font-bold text-sm truncate">The Silent Peak</h4>
+<p class="text-xs text-slate-500 mb-2">Thomas Kinkade</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-primary">$12.99</span>
+<div class="flex items-center text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="ml-1 text-slate-500">4.8</span>
+</div>
+</div>
+</div>
+<!-- Repeat cards... -->
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cover of an adventure novel with mountains" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL237cU_4rwaPByUckPMA55RgxR92wevm7gVS_d5xzgp2EGKkQ8PTT3_0GqPD5hSa5aYsBo3d0fNvAfK68FA3RXx7UVm3Ku0ZdU8fn9KthnflL5yRyeBusxmLhFkf72vqzovVQZ_J2TTVbu0cez5jVGjHj4Nw6bJxtr5IhvHw155zvZ0HTJ8mK1hPFgrVkZYGeOOosPOQ-UcwUgv0AtptNxnjOW3ft-MqjNsKRlHtYFRdRdUFtALR7pP_PEYr4kDfNAZ2kzNJX04SZ"/>
+<button class="absolute top-2 right-2 p-2 bg-white/90 dark:bg-background-dark/90 rounded-full text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h4 class="font-bold text-sm truncate">Whispers of Eldoria</h4>
+<p class="text-xs text-slate-500 mb-2">Sarah J. Miller</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-primary">$15.50</span>
+<div class="flex items-center text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="ml-1 text-slate-500">4.9</span>
+</div>
+</div>
+</div>
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Book cover with orange and dark tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsZ8g_9w_iladnax-EmLfOs2nqIp2xh5tEjeQK84xZuqZDXKiRX4uRXRkxiwdCxoVcuG25heMIaVxifX2mXFUUWmlGLjzeWSSdxne9JvhPEhOU6X306G6uEAzpuPmajlBf2GsTHb0hB4WZQJfjQHTqjgXTtHt4PE1bgE5fZKr0keVb3NkpsNcizTSfEY9lCBQGiT0BtoKmj0V2QnzJkQrnxYYu9TDuFFfuhT3jCGXa72i0xPPn5tgsxcnSy1CqR7qiH22LB7A0Ywhs"/>
+<button class="absolute top-2 right-2 p-2 bg-white/90 dark:bg-background-dark/90 rounded-full text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h4 class="font-bold text-sm truncate">Lost Kingdoms</h4>
+<p class="text-xs text-slate-500 mb-2">Marcus Vane</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-primary">$18.25</span>
+<div class="flex items-center text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="ml-1 text-slate-500">4.6</span>
+</div>
+</div>
+</div>
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Collection of various fiction books" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXCKhW-yfnVKC55L-T5V0ThBGVmuVQe8BO9YuuDlZ3bm6aZGsA-Foz0AoO4YZqpwCQ6hF-sPt3f_UIksgCy3yUD0UVjeXvU8SS_wTAwriN_gKeI8UPDjKcI7VDpGSKFPLWSoOE9fm_HI5ZSmuz0ukO0yH2KhILFTlKTbg4sfLEuc4TJQKWNcxi-q7Urif26drAsJXC5t9zwDziRL-rdIHRZVEA1YIHHogJsewSuI74ZBFBHDKKtBnIRJFAKS_khVyf8JCsVM3prYD4"/>
+<button class="absolute top-2 right-2 p-2 bg-white/90 dark:bg-background-dark/90 rounded-full text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h4 class="font-bold text-sm truncate">Beyond the Horizon</h4>
+<p class="text-xs text-slate-500 mb-2">Elena Gilbert</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-primary">$16.99</span>
+<div class="flex items-center text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="ml-1 text-slate-500">4.7</span>
+</div>
+</div>
+</div>
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Detailed close up of a vintage book" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoqWB4Gf1U-MK4T0chsGdnPn1uYnFFubfQDAI_rQMVVZDvcBJO6hCRPKtCQSmelmvyYBeohNUt5qBJnQfbDA4yn4GXscGbBkocyVMYawYuScDubaFONQrEpTDYSHxuROFHWnrpPSsxjWMem0Kfs7KMy9TImVp9f9dbv5VbChA6ohCW_7uYrmhs5IbVS3sDF1jodmvHcotYqo-6n4fUalw_TYlo8ii2iFq23MXwr-F35hqUnuqbnVAwtNWcPPpl6h7aFaB9aKY_O071"/>
+<button class="absolute top-2 right-2 p-2 bg-white/90 dark:bg-background-dark/90 rounded-full text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h4 class="font-bold text-sm truncate">Shadow Weaver</h4>
+<p class="text-xs text-slate-500 mb-2">L.M. Blackwood</p>
+<div class="flex items-center justify-between">
+<span class="font-black text-primary">$13.49</span>
+<div class="flex items-center text-[10px] text-amber-400">
+<span class="material-symbols-outlined text-xs fill-1">star</span>
+<span class="ml-1 text-slate-500">4.4</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- More from Author Carousel -->
+<section class="mb-16">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-2xl font-black">More from Elena Gilbert</h3>
+<a class="text-primary font-bold text-sm hover:underline" href="#">View All</a>
+</div>
+<div class="flex gap-6 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4">
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Another novel cover by same author" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB36UhJqLDY7O3TxjbqC8y4gPe2ojs46LT-i92GXou_Um1jAoaARqSaf0UopAzW955ATV7dpTXaQBGcQLxLfBFKHfOpTdUL-lk_aV9KDhxEG-Kux62EIt3-OYWhfK82zV68ZTyJ_9klzMkddR6lS_BtYspjx00F4uTvAMRE-jLZug6mr6hngKSafbb35Oez1N0L8YXHMYT8ZExAnUWmWW8DojS8n_DzpBUgRfN7xAqEagziDAX5SyHAU8-b39V0djkBOwcUlBqbaDBk"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-slate-900 px-4 py-2 rounded-lg font-bold text-sm">Quick View</button>
+</div>
+</div>
+<h4 class="font-bold text-sm truncate">The Midnight Library</h4>
+<span class="font-black text-primary">$19.99</span>
+</div>
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cover of a book with soft texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe7J5wE1nID-45RKP5t9Rh8JXe63sFHCzDFrvKCg1dNnIzZ8r70el-KxIffB4rHhxikDdqlql0auwABvfAOyAA3I_nc0mGdwDmnBe0okIRX_yjAaSqMLz1L7kJowXayzmyQduPMaKTMsbhd-QhnFQ-63PXMbylX3oZyxG1Xuzfk7wgU6M8l6ekwZTStBXeQrs64yEeSGt4niPG2DvEl_CHAoUyjFYsShvpCqTfc_Uta1QNH3GW9qoHhVP1xMGCfUIkfi8m83Vv-gQP"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-slate-900 px-4 py-2 rounded-lg font-bold text-sm">Quick View</button>
+</div>
+</div>
+<h4 class="font-bold text-sm truncate">Echoes of Time</h4>
+<span class="font-black text-primary">$17.50</span>
+</div>
+<div class="min-w-[200px] group">
+<div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800 relative shadow-md group-hover:shadow-xl transition-all">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cover of a mystery book" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGpGxdsQXtykB8kFA1Rk1-JoUleGYsJ98vmZK32OzJvK7s75ANEgZF-Kj0EX2bolU9w_JgWuZdSZBtHb6GqB1SI1C7Dj1Bj_kclsoZagYD03_YZ85kamHRKtqSDngfL7rp3z0AcNL7RdU5bu72eslpQ_3vlSEuRZjd-1WhxJ9AsYuGuDBTiIkR5phkaPVoV8icdSLbCaj8XfACFDi02J6UHgSjlWDO83gJNSpdk8wYKot6InhorKxykfjRxQiMeiU0CcFJLypHKElv"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<button class="bg-white text-slate-900 px-4 py-2 rounded-lg font-bold text-sm">Quick View</button>
+</div>
+</div>
+<h4 class="font-bold text-sm truncate">Silver Lining</h4>
+<span class="font-black text-primary">$21.00</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-900 text-slate-300 py-16">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<div class="bg-primary p-1.5 rounded-lg text-white">
+<span class="material-symbols-outlined text-xl leading-none">auto_stories</span>
+</div>
+<h1 class="text-xl font-black tracking-tight text-white">BookVerse</h1>
+</div>
+<p class="text-sm leading-relaxed mb-6">
+                        Your gateway to a universe of stories. Discover, collect, and enjoy the world's best literature delivered right to your door.
+                    </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">alternate_email</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">smartphone</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Explore</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Popular Categories</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Bestsellers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">New Arrivals</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Gift Cards</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Customer Care</h4>
+<ul class="space-y-4 text-sm">
+<li><a class="hover:text-primary transition-colors" href="#">Shipping Policy</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">FAQ</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Support</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Newsletter</h4>
+<p class="text-sm mb-4">Join our community and get 10% off your first order.</p>
+<div class="flex gap-2">
+<input class="flex-1 bg-slate-800 border-none rounded-lg text-sm focus:ring-1 focus:ring-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-white p-2 rounded-lg hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-slate-800 flex flex-wrap justify-between items-center gap-4 text-xs">
+<p>© 2024 BookVerse Inc. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-white" href="#">Privacy Policy</a>
+<a class="hover:text-white" href="#">Terms of Service</a>
+<a class="hover:text-white" href="#">Cookies Settings</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Chatbot Button -->
+<div class="fixed bottom-6 right-6 z-50 group">
+<div class="absolute bottom-full right-0 mb-4 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+<div class="bg-white dark:bg-slate-800 px-4 py-2 rounded-xl shadow-xl text-xs font-bold whitespace-nowrap border border-slate-100 dark:border-slate-700">
+                Hi! Need help finding a book? 📚
+            </div>
+</div>
+<button class="w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl">forum</span>
+</button>
+</div>
+</body></html>

@@ -1,0 +1,233 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} - BookVerse{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Breadcrumbs -->
+    <nav class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 mb-8">
+        <a class="hover:text-primary" href="{{ url_for('public_bp.index') }}">Home</a>
+        <span class="text-xs">/</span>
+        <a class="hover:text-primary" href="{{ url_for('public_bp.catalog') }}">Books</a>
+        <span class="text-xs">/</span>
+        {% if book.categories %}
+        <a class="hover:text-primary" href="{{ url_for('public_bp.catalog', category=book.categories[0].slug) }}">{{ book.categories[0].name }}</a>
+        <span class="text-xs">/</span>
+        {% endif %}
+        <span class="text-slate-900 font-medium truncate">{{ book.title }}</span>
+    </nav>
+
+    <!-- Product Hero Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+        <!-- Left: Images -->
+        <div class="lg:col-span-5 space-y-4">
+            <div class="aspect-[3/4] rounded-2xl overflow-hidden bg-slate-200 shadow-xl border border-slate-200">
+                <img class="w-full h-full object-cover" alt="{{ book.title }}" src="{{ book.image_url }}" />
+            </div>
+            <!-- Thumbnails (Optional) -->
+            <div class="grid grid-cols-4 gap-4 hidden">
+                <div class="aspect-square rounded-xl overflow-hidden border-2 border-primary cursor-pointer">
+                    <img class="w-full h-full object-cover" alt="Main cover view" src="{{ book.image_url }}" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="lg:col-span-7 flex flex-col">
+            <div class="mb-6">
+                <h2 class="text-4xl font-black text-slate-900 mb-2 leading-tight">{{ book.title }}</h2>
+                <p class="text-xl text-slate-600">by 
+                    {% for author in book.authors %}
+                        <a class="text-brand-orangeAccent hover:underline font-semibold" href="#">{{ author.name }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+
+            <div class="flex items-center gap-4 mb-6">
+                <div class="flex items-center text-amber-400">
+                    <!-- Basic Star Rating Rendering -->
+                    {% set rating = book.average_rating|default(0, true)|round(1) %}
+                    {% for i in range(5) %}
+                        {% if i < rating|int %}
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+                        {% elif i == rating|int and rating % 1 >= 0.5 %}
+                            <!-- Half Star Approximation -->
+                            <svg class="w-5 h-5 fill-current opacity-50" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+                        {% else %}
+                            <svg class="w-5 h-5 fill-current text-slate-300" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"></path></svg>
+                        {% endif %}
+                    {% endfor %}
+                    <span class="ml-2 text-slate-900 font-bold">{{ rating }}</span>
+                </div>
+                <span class="text-slate-400">|</span>
+                <span class="text-slate-500 text-sm">{{ book.ratings_count|default(0, true) }} Ratings</span>
+            </div>
+
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-3xl font-black text-slate-900">${{ '%.2f' | format(book.price) }}</span>
+                    {% if book.discount_price %}
+                    <span class="text-lg text-slate-400 line-through">${{ '%.2f' | format(book.discount_price) }}</span>
+                    <span class="bg-brand-orangeAccent/10 text-brand-orangeAccent text-xs font-bold px-2 py-1 rounded-lg">SALE</span>
+                    {% endif %}
+                </div>
+                <div class="flex items-center gap-2 text-emerald-600 text-sm font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    {% if book.stock_quantity > 0 %}
+                        In Stock & Ready to Ship ({{ book.stock_quantity }} available)
+                    {% else %}
+                        <span class="text-red-500">Out of Stock</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <div class="text-slate-600 leading-relaxed max-h-40 overflow-hidden relative">
+                    {{ book.description|safe if book.description else 'No description available.' }}
+                </div>
+            </div>
+
+            <div class="mt-auto space-y-6">
+                <!-- Add to Cart Form -->
+                <form action="{{ url_for('public_bp.add_to_cart', book_id=book.id) }}" method="POST" class="flex flex-wrap items-center gap-4" onsubmit='gtag("event", "add_to_cart", { currency: "USD", value: {{ book.discount_price if book.discount_price else book.price }}, items: [{ item_id: "{{ book.id }}", item_name: {{ book.title|tojson|safe }}, price: {{ book.discount_price if book.discount_price else book.price }}, quantity: parseInt(document.getElementById("qty").value) || 1 }] });'>
+                    <div class="flex items-center bg-slate-100 rounded-xl px-2 py-1 border border-slate-200">
+                        <button type="button" onclick="document.getElementById('qty').value = Math.max(1, parseInt(document.getElementById('qty').value) - 1)" class="w-10 h-10 flex items-center justify-center text-slate-600 hover:text-brand-orangeAccent transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4"></path></svg>
+                        </button>
+                        <input type="number" id="qty" name="quantity" value="1" min="1" max="{{ book.stock_quantity }}" class="w-12 text-center font-bold bg-transparent border-none p-0 focus:ring-0 appearance-none">
+                        <button type="button" onclick="document.getElementById('qty').value = Math.min({{ book.stock_quantity }}, parseInt(document.getElementById('qty').value) + 1)" class="w-10 h-10 flex items-center justify-center text-slate-600 hover:text-brand-orangeAccent transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <button type="submit" {% if book.stock_quantity <= 0 %}disabled{% endif %} class="flex-1 min-w-[200px] h-14 bg-brand-orangeAccent text-white font-bold rounded-xl shadow-lg hover:bg-orange-600 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        Add to Cart
+                    </button>
+                    
+                    <!-- Optional: Wishlist Button -->
+                    <button type="button" class="h-14 w-14 border border-slate-200 text-slate-400 hover:text-red-500 rounded-xl flex items-center justify-center transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </button>
+                </form>
+
+                <!-- Trust Badges -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-200">
+                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-brand-deepBlue">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                        </div>
+                        <span>Fast Shipping</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-brand-deepBlue">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        </div>
+                        <span>30-Day Returns</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600">
+                        <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-brand-deepBlue">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <span>Secure Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Tabs -->
+    <div class="mb-20">
+        <div class="flex border-b border-slate-200 mb-8 border-t pt-8">
+            <button class="px-8 py-4 text-sm font-bold border-b-2 border-brand-orangeAccent text-brand-orangeAccent">Description & Details</button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="lg:col-span-2">
+                <h3 class="text-xl font-bold mb-4">About the Book</h3>
+                <p class="text-slate-600 leading-relaxed mb-6">{{ book.description|safe if book.description else 'No description available.' }}</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-50 flex justify-between">
+                        <span class="text-slate-500">Publisher</span>
+                        <span class="font-semibold text-right">{{ book.publisher.name if book.publisher else 'Unknown' }}</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 flex justify-between">
+                        <span class="text-slate-500">Year</span>
+                        <span class="font-semibold text-right">{{ book.publication_year|default('N/A', true) }}</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 flex justify-between">
+                        <span class="text-slate-500">Format</span>
+                        <span class="font-semibold text-right">{{ book.format|default('N/A', true) }}</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 flex justify-between">
+                        <span class="text-slate-500">Language</span>
+                        <span class="font-semibold text-right">{{ book.language|default('N/A', true) }}</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 sm:col-span-2 flex justify-between">
+                        <span class="text-slate-500">ISBN</span>
+                        <span class="font-semibold text-right">{{ book.isbn|default('N/A', true) }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-blue-50/50 rounded-2xl p-6 h-fit border border-blue-100">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-brand-orangeAccent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Need more info?
+                </h3>
+                <p class="text-sm text-slate-600 mb-4">Chat with our AI assistant to learn more about this book's themes, style, and whether it's right for you.</p>
+                <button onclick="document.getElementById('chatbot-toggle-btn').click(); setTimeout(()=>document.getElementById('chatbot-input').value='Tell me about {{ book.title|replace('\'', '\\\'') }}', 300)" class="w-full py-3 text-sm font-bold text-white bg-brand-deepBlue rounded-xl hover:bg-blue-800 transition-colors">
+                    Ask AI Assistant
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Similar Books Carousel -->
+    {% if similar_books %}
+    <section class="mb-16">
+        <div class="flex items-center justify-between mb-8">
+            <h3 class="text-2xl font-black text-brand-deepBlue">You Might Also Like</h3>
+        </div>
+        <div class="flex gap-6 overflow-x-auto no-scrollbar pb-4 -mx-4 px-4 snap-x">
+            {% for sim_book in similar_books %}
+            <div class="min-w-[200px] max-w-[200px] group snap-start">
+                <a href="{{ url_for('public_bp.book_detail', slug=sim_book.slug) }}" class="block">
+                    <div class="aspect-[3/4] rounded-xl overflow-hidden mb-4 bg-slate-100 relative shadow-md group-hover:shadow-xl transition-all">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="{{ sim_book.title }}" src="{{ sim_book.image_url }}" loading="lazy"/>
+                    </div>
+                    <h4 class="font-bold text-sm truncate text-slate-800 group-hover:text-brand-orangeAccent transition-colors">{{ sim_book.title }}</h4>
+                    <p class="text-xs text-slate-500 mb-2 truncate" title="{{ sim_book.authors }}">{{ sim_book.authors }}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="font-black text-slate-900">${{ '%.2f' | format(sim_book.price) }}</span>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+</div>
+
+<!-- CSS for Scrollbar hiding -->
+<style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    gtag('event', 'view_item', {
+        currency: "USD",
+        value: {{ book.discount_price if book.discount_price else book.price }},
+        items: [{
+            item_id: "{{ book.id }}",
+            item_name: {{ book.title|tojson|safe }},
+            price: {{ book.discount_price if book.discount_price else book.price }}
+        }]
+    });
+</script>
+{% endblock %}

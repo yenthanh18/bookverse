@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BookVerse Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white">
+<span class="material-symbols-outlined">menu_book</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-lg font-bold leading-tight">BookVerse</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Admin Dashboard</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-primary text-white" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">book</span>
+<span class="text-sm font-medium">Books</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">category</span>
+<span class="text-sm font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">sell</span>
+<span class="text-sm font-medium">Promotions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<span class="text-sm font-medium">Reports</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-medium">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="sticky top-0 z-10 flex items-center justify-between bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-8 py-4 border-b border-slate-200 dark:border-slate-800">
+<h2 class="text-xl font-bold tracking-tight">Dashboard Overview</h2>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<button class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2.5 w-2 h-2 bg-primary rounded-full ring-2 ring-white dark:ring-slate-900"></span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-6 border-l border-slate-200 dark:border-slate-800">
+<div class="flex flex-col items-end">
+<span class="text-sm font-semibold">Sarah Jenkins</span>
+<span class="text-xs text-slate-500">Store Manager</span>
+</div>
+<img alt="Admin Profile" class="w-10 h-10 rounded-full bg-slate-200" data-alt="Portrait of a female store manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtRmiua42JhPQC0jLMQ46wzryfXVQasmdSfb-5Lt-BDzgRALYY7c2P9VUryQimARiYzAh05MTspp4r8gXD4_HYTO2LN-F25cKFueNziRokmTK4A4CggQdzxXL3GkQp-DRtx0KbhVxuQqaPg8xpPH-BeD3d4li10oshdZO8u-3yXeiZdsWuMLSJIZxyXLkzSlsgIoQRg4oW0PUy50-w4bzHv1D2tm-nJxN9dDdSQvbOH1CuEaTVqT_3hcP24Qo25VOmJEDC390aSHue"/>
+</div>
+</div>
+</header>
+<div class="p-8 space-y-8 max-w-7xl mx-auto">
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">shopping_basket</span>
+</div>
+<span class="text-emerald-500 text-sm font-medium bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded">+12.5%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Orders</p>
+<h3 class="text-2xl font-bold mt-1">1,284</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-emerald-500 text-sm font-medium bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded">+8.2%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Revenue</p>
+<h3 class="text-2xl font-bold mt-1">$42,500</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined">library_books</span>
+</div>
+<span class="text-rose-500 text-sm font-medium bg-rose-50 dark:bg-rose-900/20 px-2 py-1 rounded">-2.4%</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Books in Stock</p>
+<h3 class="text-2xl font-bold mt-1">8,420</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-rose-100 dark:bg-rose-900/30 rounded-lg text-rose-600 dark:text-rose-400">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-primary text-sm font-medium bg-primary/10 px-2 py-1 rounded">+5 active</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Low Stock Alerts</p>
+<h3 class="text-2xl font-bold mt-1">12</h3>
+</div>
+</div>
+<!-- Sales Revenue Chart Section -->
+<div class="bg-white dark:bg-slate-900 p-8 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-lg font-bold">Sales Revenue</h3>
+<p class="text-sm text-slate-500 dark:text-slate-400">Monthly revenue overview across all categories</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Daily</button>
+<button class="px-4 py-2 text-sm font-medium rounded-lg bg-primary/10 text-primary border border-primary/20">Weekly</button>
+<button class="px-4 py-2 text-sm font-medium rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">Monthly</button>
+</div>
+</div>
+<div class="h-64 relative">
+<svg class="w-full h-full" preserveaspectratio="none" viewbox="0 0 800 200">
+<defs>
+<lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:var(--primary);stop-opacity:0.2"></stop>
+<stop offset="100%" style="stop-color:var(--primary);stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,150 C50,140 100,160 150,100 C200,40 250,80 300,50 C350,20 400,100 450,90 C500,80 550,40 600,60 C650,80 700,20 800,40 V200 H0 Z" fill="url(#gradient)" style="--primary:#ec5b13;"></path>
+<path d="M0,150 C50,140 100,160 150,100 C200,40 250,80 300,50 C350,20 400,100 450,90 C500,80 550,40 600,60 C650,80 700,20 800,40" fill="none" stroke="#ec5b13" stroke-width="3"></path>
+</svg>
+<div class="flex justify-between mt-4 text-xs text-slate-400 font-medium">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+</div>
+<!-- Bottom Tables Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Best Selling Books -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-lg font-bold">Best Selling Books</h3>
+<button class="text-primary text-sm font-semibold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Book</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Units Sold</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Revenue</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-14 bg-slate-200 rounded shrink-0 overflow-hidden">
+<img alt="The Great Gatsby" class="w-full h-full object-cover" data-alt="Modern minimalist book cover for The Great Gatsby" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyjF2ztPqzOGTZVqEsaAHT2wTo-iPsMcUSO-nhtvG_Dk8S94kX9MPjCay_oVFNVs330QtdWvDkq3VPL0nYApEC19DEbUwf7QFYv6fGlEz6Ml3JF460KNLy0LlfEb79zMNtlyMQPsw9ofD1kXZiANny-gaUD3gJ-BLImHz1Ik52hTbmWW3ZyGih51HLHkx22sIF1GqEp89QVbNsWfjB31d0tZvB3aIVUlw312Iy04ETF_hla-87D2LCOazGsuWm6Dld0RZtPaEV9Hrr"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold">The Great Gatsby</span>
+<span class="text-xs text-slate-500">F. Scott Fitzgerald</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">842</td>
+<td class="px-6 py-4 text-sm font-bold text-emerald-600 dark:text-emerald-400">$12,630</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-14 bg-slate-200 rounded shrink-0 overflow-hidden">
+<img alt="1984" class="w-full h-full object-cover" data-alt="Classic dystopian style book cover for 1984" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApiLwEaTkH7-Wm9i6WjXVIFoX6gjDhu5G_zwUoQ1n-gmKx8dUt4eAQ8hvH5HyMrpk9X-9n8FPnrYCDb-jYRyZNQjr5FXYcM9LE6CeRQ_LZ975KODpXyT8hdxvNTrC01XNhLLmO0pQpySqJS_S-L5QllvMNUiD-MiM-O-ePJVaxAHDrkspFu49q9PS0ytVT3jVYYZR37fCJx024ly7epXAdjJYU-Yf1IAgfnKuxFxaN0razMwsUIbm5hCZ79pBRryAKCAVa4ninQs2G"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold">1984</span>
+<span class="text-xs text-slate-500">George Orwell</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">754</td>
+<td class="px-6 py-4 text-sm font-bold text-emerald-600 dark:text-emerald-400">$10,556</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-14 bg-slate-200 rounded shrink-0 overflow-hidden">
+<img alt="Atomic Habits" class="w-full h-full object-cover" data-alt="Clean yellow and white book cover for Atomic Habits" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyXKtuaStQRGw1XrXnF65wmzlikeK85tu7SjlUmlg0YMe67GnXjnXwMC3IcmuWiIo_6a2MMwi8HEi19coUS0cy88s4zyrcrtni1lRYrAJA2jAPhmEIJPE3_SBTA1Fo-pXnnfFov6RwZkMoB5Qhoqfq6i7IdSJavIJw5eWXSP70OvaPvOPkasajgZUDmEOIwwL5foGPz2E8NSI8jeVUmCgbJhaNfoz7XNzSYfwaswhpNEZGFMtPiY4CHMq2w_Bxysz54KZl1swv_iP1"/>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold">Atomic Habits</span>
+<span class="text-xs text-slate-500">James Clear</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-sm font-medium">620</td>
+<td class="px-6 py-4 text-sm font-bold text-emerald-600 dark:text-emerald-400">$15,500</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Low Stock Alert -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<h3 class="text-lg font-bold">Low Stock Alerts</h3>
+<span class="bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 text-xs font-bold px-2 py-0.5 rounded-full">12 Items</span>
+</div>
+<button class="text-primary text-sm font-semibold hover:underline">Manage All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 dark:bg-slate-800/50">
+<tr>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Title</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">In Stock</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-semibold">The Alchemist</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-rose-500 w-[12%]"></div>
+</div>
+<span class="text-sm font-medium text-rose-600">3 left</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-primary hover:bg-primary/90 text-white text-xs font-bold py-2 px-4 rounded-lg transition-colors shadow-sm shadow-primary/20">Update</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-semibold">Dune (Deluxe Ed.)</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-orange-500 w-[24%]"></div>
+</div>
+<span class="text-sm font-medium text-orange-600">6 left</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-primary hover:bg-primary/90 text-white text-xs font-bold py-2 px-4 rounded-lg transition-colors shadow-sm shadow-primary/20">Update</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4 text-sm font-semibold">Thinking, Fast and Slow</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="h-full bg-rose-500 w-[8%]"></div>
+</div>
+<span class="text-sm font-medium text-rose-600">2 left</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="bg-primary hover:bg-primary/90 text-white text-xs font-bold py-2 px-4 rounded-lg transition-colors shadow-sm shadow-primary/20">Update</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

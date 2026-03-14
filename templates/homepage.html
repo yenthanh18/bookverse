@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- BEGIN: HeroSection -->
+<section class="hero-bg min-h-[500px] flex items-center justify-center text-center px-4 py-20" data-purpose="hero-banner">
+    <div class="max-w-3xl">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6">Discover Your Next Favorite Book</h1>
+        <p class="text-lg md:text-xl text-brand-warmBeige mb-10 opacity-90">Explore thousands of titles from classic literature to modern bestsellers. Your journey begins here.</p>
+        <a class="bg-brand-orangeAccent hover:bg-orange-600 text-white px-10 py-4 rounded-lg font-bold text-lg transition-all shadow-lg inline-block" href="{{ url_for('public_bp.catalog') }}">Browse Books</a>
+    </div>
+</section>
+<!-- END: HeroSection -->
+
+<!-- BEGIN: CategoriesSection -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" data-purpose="categories">
+    <h2 class="text-2xl font-bold text-brand-deepBlue mb-8">Shop by Category</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        {% for cat in global_categories[:10] %}
+        <a class="group bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center transition-all hover:border-brand-orangeAccent hover:shadow-md" href="{{ url_for('public_bp.catalog', category=cat.slug) }}">
+            <div class="w-16 h-16 bg-blue-50 text-brand-deepBlue rounded-full flex items-center justify-center mb-4 group-hover:bg-brand-orangeAccent group-hover:text-white transition-colors">
+                <!-- Fallback icon -->
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"></path></svg>
+            </div>
+            <span class="font-semibold text-slate-700 text-center text-sm">{{ cat.name }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+<!-- END: CategoriesSection -->
+
+<!-- BEGIN: BestSellersSection -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16" data-purpose="best-sellers">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl font-bold text-brand-deepBlue">Best Sellers & Popular Books</h2>
+        <a class="text-brand-orangeAccent font-semibold hover:underline" href="{{ url_for('public_bp.catalog') }}">View All</a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        {% for book in popular_books %}
+        <div class="group relative bg-white p-3 rounded-xl border border-slate-100 hover:shadow-lg transition-all flex flex-col h-full">
+            <a href="{{ url_for('public_bp.book_detail', slug=book.slug) }}" class="flex-grow">
+                {% if loop.index <= 3 %}
+                <div class="absolute top-2 left-2 z-10 bg-brand-orangeAccent text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm">TOP RATED</div>
+                {% endif %}
+                <img alt="{{ book.title }}" class="w-full rounded-lg mb-4 h-48 object-cover bg-slate-100" src="{{ book.image_url }}" loading="lazy"/>
+                <h4 class="font-bold text-slate-800 text-sm mb-1 line-clamp-2 min-h-[40px]">{{ book.title }}</h4>
+                <p class="text-slate-500 text-xs mb-2 line-clamp-1" title="{{ book.authors }}">{{ book.authors }}</p>
+            </a>
+            <div class="mt-auto">
+                <div class="flex items-baseline gap-2 mb-2">
+                    <span class="text-brand-deepBlue font-bold">${{ '%.2f' | format(book.price) }}</span>
+                    {% if book.discount_price %}
+                    <span class="text-slate-400 text-xs line-through">${{ '%.2f' | format(book.discount_price) }}</span>
+                    {% endif %}
+                </div>
+                <!-- TODO: Add to cart form -->
+                <button class="w-full bg-slate-900 hover:bg-brand-deepBlue text-white py-1.5 rounded text-sm font-medium transition-colors" onclick="alert('Added to cart placeholder')">Add to Cart</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- END: BestSellersSection -->
+
+<!-- BEGIN: PromotionBanner -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16" data-purpose="promo-banner">
+    <div class="bg-brand-deepBlue rounded-3xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center gap-8">
+        <div class="relative z-10 text-center md:text-left">
+            <span class="text-brand-orangeAccent font-bold tracking-widest text-sm mb-4 block uppercase flexitems-center gap-2">
+                <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                Limited Time Offer
+            </span>
+            <h2 class="text-3xl md:text-5xl font-extrabold text-white mb-6">Summer Reading Sale! <br/><span class="text-brand-orangeAccent">Extra 20% OFF</span></h2>
+            <p class="text-slate-300 text-lg mb-8 max-w-md">Use code <span class="bg-blue-800 text-white px-2 py-1 rounded border border-blue-600 font-mono">SUMMER24</span> at checkout.</p>
+            <a href="{{ url_for('public_bp.catalog') }}" class="bg-brand-orangeAccent hover:bg-orange-600 text-white px-8 py-3 rounded-xl font-bold transition-all transform hover:scale-105 inline-block">Shop Now</a>
+        </div>
+        <div class="hidden md:block absolute -right-10 -bottom-10 opacity-20">
+            <svg class="w-96 h-96 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        </div>
+    </div>
+</section>
+<!-- END: PromotionBanner -->
+{% endblock %}

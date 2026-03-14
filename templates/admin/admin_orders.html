@@ -1,0 +1,76 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Manage Orders{% endblock %}
+{% block header_title %}Orders{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <!-- Toolbar -->
+    <div class="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+        <h3 class="text-xl font-bold text-slate-900">Recent Orders</h3>
+        <div class="flex gap-2">
+            <input type="text" placeholder="Search orders..." class="border-slate-200 rounded-lg focus:ring-brand-orangeAccent focus:border-brand-orangeAccent text-sm">
+            <button class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm transition-colors">Filter</button>
+        </div>
+    </div>
+    
+    <!-- Orders Table -->
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider font-bold">
+                    <th class="p-4 pl-6">Order ID</th>
+                    <th class="p-4">Date</th>
+                    <th class="p-4">Customer</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4">Payment</th>
+                    <th class="p-4">Total</th>
+                    <th class="p-4 pr-6 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                {% if orders %}
+                    {% for order in orders %}
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4 pl-6 text-sm font-bold text-brand-deepBlue">#{{ "%06d" | format(order.id) }}</td>
+                        <td class="p-4 text-sm text-slate-600">{{ order.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td class="p-4 text-sm text-slate-800">
+                            {% if order.user %}
+                                {{ order.user.full_name }}
+                            {% else %}
+                                <span class="text-slate-500 italic">Guest</span>
+                            {% endif %}
+                            <br/><span class="text-xs text-slate-500">{{ order.shipping_address }}</span>
+                        </td>
+                        <td class="p-4 text-sm">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+                                {{ order.status|capitalize }}
+                            </span>
+                        </td>
+                        <td class="p-4 text-sm text-slate-600 font-medium">{{ order.payment_method }}</td>
+                        <td class="p-4 text-sm font-bold text-slate-900">${{ '%.2f' | format(order.total_amount) }}</td>
+                        <td class="p-4 pr-6 text-right text-sm">
+                            <a href="{{ url_for('admin_bp.order_detail', order_id=order.id) }}" class="text-brand-orangeAccent hover:text-orange-600 font-bold hover:underline">View</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="p-8 text-center text-slate-500">No orders found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Pagination placeholder -->
+    <div class="p-4 border-t border-slate-100 flex items-center justify-between text-sm text-slate-500">
+        <span>Showing 1 to {{ orders|length }} of {{ orders|length }} entries</span>
+        <div class="flex gap-1">
+            <button class="px-3 py-1 border border-slate-200 rounded text-slate-400 cursor-not-allowed">Prev</button>
+            <button class="px-3 py-1 bg-brand-orangeAccent text-white rounded font-bold">1</button>
+            <button class="px-3 py-1 border border-slate-200 rounded hover:bg-slate-50 transition-colors">Next</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
