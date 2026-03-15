@@ -95,6 +95,30 @@ Content-based recommendation arrays are pre-computed and stored in `.pkl` assets
 
 ---
 
+## ☁️ Deployment (Render)
+
+This application is configured for production serverless deployment on Render using Gunicorn.
+
+1. **Connect GitHub to Render**
+   - Create a new "Web Service" in your Render dashboard and connect your GitHub repository (`https://github.com/yenthanh18/bookverse`).
+
+2. **Configure Build & Start Commands**
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `gunicorn app:app`
+
+3. **Environment Variables**
+   Add the following variables to your Render Web Service settings:
+   - `DATABASE_URL` (Required): Your external PostgreSQL connection string (Render provides a hosted Postgres addon). Must start with `postgresql://`
+   - `SECRET_KEY` (Required): A secure randomized string for session management.
+   - `PYTHON_VERSION` (Optional): Set to `3.10.13` (automatically detected via `runtime.txt`).
+
+4. **Live URL**
+   - After a successful automatic deploy, your application will be available at `https://bookverse.onrender.com` 
+
+*(Note: Pushing code to the `main` branch will seamlessly trigger an automatic build and manual redeploys can be fired directly through the Render Dashboard.)*
+
+---
+
 ## 🔮 Future Improvements
 - [ ] Incorporate Stripe API for live payment processing.
 - [ ] Migrate AI models to vector databases (e.g., Pinecone/Milvus) for >1M item scalability.
