@@ -110,10 +110,11 @@ This application is configured for production serverless deployment on Render us
    Add the following variables to your Render Web Service settings:
    - `DATABASE_URL` (Required): Your external PostgreSQL connection string (Render provides a hosted Postgres addon). Must start with `postgresql://`
    - `SECRET_KEY` (Required): A secure randomized string for session management.
-   - `PYTHON_VERSION` (Optional): Set to `3.10.13` (automatically detected via `runtime.txt`).
+   - `PYTHON_VERSION` (Required): Set to `3.10.13` to ensure pandas and ML libraries compile correctly. The project also includes a `.python-version` file.
 
 4. **Live URL**
-   - After a successful automatic deploy, your application will be available at `https://bookverse.onrender.com` 
+   - After setting exactly `PYTHON_VERSION=3.10.13`, manually trigger **"Clear build cache & deploy"** in the Render dashboard.
+   - Your application will then be available at `https://bookverse.onrender.com` 
 
 *(Note: Pushing code to the `main` branch will seamlessly trigger an automatic build and manual redeploys can be fired directly through the Render Dashboard.)*
 
