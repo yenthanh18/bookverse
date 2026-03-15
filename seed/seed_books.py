@@ -19,13 +19,7 @@ def slugify(text: str) -> str:
 def seed_database():
     app = create_app()
     with app.app_context():
-        print("Dropping all existing tables to guarantee clean state...")
-        db.drop_all()
-        
-        print("Creating tables...")
-        db.create_all()
-
-        print("Loading data from books_store_ready.csv...")
+        print("Checking tables and loading data from books_store_ready.csv...")
         csv_path = os.path.join(app.config.get('AI_MODELS_DIR', '.'), 'books_store_ready.csv')
         try:
             df = pd.read_csv(csv_path)

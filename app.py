@@ -46,8 +46,35 @@ with app.app_context():
             db.session.commit()
             
         print("[DIAGNOSTICS] Database ready.")
+        
+        from models.models import Book
+        if not Book.query.first():
+            print("[SEED] Books table empty, starting import...")
+            from seed.seed_books import seed_database
+            seed_database()
+            print("[SEED] Categories/Authors/Publishers ready")
+            
+        import pickle
+        import os
+        base_dir = app.config.get('AI_MODELS_DIR', '.')
+        vectorizer_path = os.path.join(base_dir, 'chatbot_vectorizer.pkl')
+        rebuild_needed = False
+        if not os.path.exists(vectorizer_path):
+            rebuild_needed = True
+        else:
+            try:
+                with open(vectorizer_path, 'rb') as f:
+                    pickle.load(f)
+            except Exception as e:
+                print(f"[AI BUILD] Error loading artifacts: {e}. Forcing rebuild.")
+                rebuild_needed = True
+                
+        if rebuild_needed:
+            from seed.build_ai_models import build_models
+            build_models()
+            
     except Exception as e:
-        print(f"[DIAGNOSTICS] Startup DB Error (Ignore during build): {e}")
+        print(f"[DIAGNOSTICS] Startup Error (Ignore during initial build metadata parsing): {e}")
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
